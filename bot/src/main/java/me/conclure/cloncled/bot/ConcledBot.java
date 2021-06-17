@@ -1,8 +1,8 @@
-package me.conclure.concled.bot;
+package me.conclure.cloncled.bot;
 
-import me.conclure.concled.configuration.Configuration;
+import me.conclure.cloncled.configuration.Configuration;
 
-public class ConcledBot {
+public final class ConcledBot {
   private final Configuration configuration;
 
   public ConcledBot(Configuration configuration) {

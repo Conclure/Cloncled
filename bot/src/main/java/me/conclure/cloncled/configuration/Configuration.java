@@ -1,7 +1,7 @@
-package me.conclure.concled.configuration;
+package me.conclure.cloncled.configuration;
 
+import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
-import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.yaml.NodeStyle;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
@@ -11,9 +11,11 @@ import me.conclure.concled.api.annotations.PolyNull;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.IdentityHashMap;
+import java.util.Map;
 import java.util.function.Function;
 
-public class Configuration {
+public final class Configuration {
   public static final Function<Path, YamlConfigurationLoader> FACTORY;
 
   static {
@@ -24,19 +26,28 @@ public class Configuration {
          .build();
   }
 
-  private ConfigurationNode node;
+  private final Map<Key<?>,Object> cache = new IdentityHashMap<>();
 
-  public void load(Path path) throws ConfigurateException {
-    this.node = FACTORY.apply(path).load();
+  public void load(Iterable<Key<?>> keys, Path path) throws ConfigurateException {
+    this.cache.clear();
+    CommentedConfigurationNode node = FACTORY.apply(path).load();
+
+    for (Key<?> key : keys) {
+      Object value = null;
+
+      try {
+        value = key.get(node);
+      } catch (SerializationException e) {
+        e.printStackTrace();
+      }
+
+      this.cache.put(key,value);
+    }
   }
 
   @PolyNull
   public <T> T get(Key<T> key) {
-    try {
-      return key.get(this.node);
-    } catch (SerializationException e) {
-      e.printStackTrace();
-      return null;
-    }
+    //noinspection unchecked
+    return (T) this.cache.get(key);
   }
 }

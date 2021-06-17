@@ -1,7 +1,9 @@
 apply plugin: SHADOW
+apply plugin: 'application'
 apply from: SHADOW_CONFIGURATION
 
 version FULL_VERSION
+mainClassName = 'me.conclure.cloncled.Main'
 
 dependencies {
     runtimeOnly LOGBACK
@@ -19,4 +21,33 @@ dependencies {
 
 shadowJar {
     baseName 'concled-bot'
+}
+
+task cloneJar(group: "bot") {
+    dependsOn shadowJar
+
+    doFirst {
+        if (!RUN_DIR.exists()) {
+            RUN_DIR.mkdirs()
+        }
+    }
+
+    doLast {
+        copy {
+            from shadowJar.archiveFile
+            into RUN_DIR
+        }
+    }
+}
+
+task runBot(type: JavaExec, group: "bot") {
+    workingDir RUN_DIR
+    main "-jar"
+
+    args shadowJar.archiveFile.get().asFile.name
+}
+
+task cloneRunBot(group: "bot") {
+    dependsOn cloneJar
+    finalizedBy runBot
 }

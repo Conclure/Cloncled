@@ -1,8 +1,8 @@
-package me.conclure.concled.util;
+package me.conclure.cloncled.util;
 
 import java.net.URI;
 
-public interface URIHelper {
+public interface URIStaticFactory {
   static URI create(String string) {
     try {
       return URI.create(string);

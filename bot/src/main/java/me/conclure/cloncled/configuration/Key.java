@@ -1,4 +1,4 @@
-package me.conclure.concled.configuration;
+package me.conclure.cloncled.configuration;
 
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;

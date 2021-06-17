@@ -1,10 +1,10 @@
-package me.conclure.concled.configuration;
+package me.conclure.cloncled.configuration;
 
 import org.spongepowered.configurate.ConfigurationNode;
 
 import java.util.Arrays;
 
-public class DelegatedSimpleTransformer<T> implements Key.Transformer<T> {
+public final class DelegatedSimpleTransformer<T> implements Key.Transformer<T> {
   private final SimpleTranformer<T> tranformer;
   private final T fallback;
   private final Object[] path;

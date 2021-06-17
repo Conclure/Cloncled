@@ -1,8 +1,8 @@
-package me.conclure.concled;
+package me.conclure.cloncled;
 
 import joptsimple.OptionSet;
 
-import me.conclure.concled.util.URIHelper;
+import me.conclure.cloncled.util.URIStaticFactory;
 
 import java.net.URI;
 import java.nio.file.Path;
@@ -18,11 +18,11 @@ public record Options(Path bootstrapPath, Path configPath) {
     return set.valueOfOptional(option)
         .filter(String.class::isInstance)
         .map(String.class::cast)
-        .map(URIHelper::create)
+        .map(URIStaticFactory::create)
         .map(URI::getPath)
         .map(Path::of)
-        .map(Path::toAbsolutePath)
-        .orElse(def);
+        .orElse(def)
+        .toAbsolutePath();
   }
 
   @Override

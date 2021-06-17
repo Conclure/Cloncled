@@ -22,4 +22,6 @@ ext {
     VERSION_PATCH = 0
     API_VERSION = "$VERSION_MAJOR.$VERSION_MINOR"
     FULL_VERSION = "$API_VERSION.$VERSION_PATCH"
+
+    RUN_DIR = new File(rootProject.rootDir,"run")
 }
