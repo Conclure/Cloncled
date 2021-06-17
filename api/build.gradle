@@ -1,0 +1,14 @@
+apply plugin: SHADOW
+apply from: SHADOW_CONFIGURATION
+
+version API_VERSION
+
+dependencies {
+    compileOnlyApi JDA
+    compileOnlyApi GUAVA
+    compileOnlyApi GSON
+}
+
+shadowJar {
+    baseName 'concled-api'
+}

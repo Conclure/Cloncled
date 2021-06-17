@@ -1,0 +1,22 @@
+apply plugin: SHADOW
+apply from: SHADOW_CONFIGURATION
+
+version FULL_VERSION
+
+dependencies {
+    runtimeOnly LOGBACK
+
+    api JDA
+    api GUAVA
+    api GSON
+    api CONFIGURATE
+    api CAFFEINE
+    api JOPT
+
+    implementation API
+}
+
+
+shadowJar {
+    baseName 'concled-bot'
+}

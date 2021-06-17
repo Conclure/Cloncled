@@ -1,0 +1,25 @@
+ext {
+    /* Dependencies */
+    LOGBACK = 'ch.qos.logback:logback-classic:1.2.3'
+    JDA = 'net.dv8tion:JDA:4.3.0_278'
+    GUAVA = 'com.google.guava:guava:30.1.1-jre'
+    GSON = 'com.google.code.gson:gson:2.8.6'
+    CONFIGURATE = 'org.spongepowered:configurate-yaml:4.1.1'
+    CAFFEINE = 'com.github.ben-manes.caffeine:caffeine:3.0.2'
+    JOPT = 'net.sf.jopt-simple:jopt-simple:6.0-alpha-3'
+
+    /* Shadow plugin related */
+    SHADOW = 'com.github.johnrengelman.shadow'
+    SHADOW_CONFIGURATION = new File(rootProject.rootDir,'shadow-configuration.gradle').absolutePath
+
+    /* Module related */
+    API = project(':api')
+    GROUP = 'me.conclure.cloncled'
+
+    /* Version related */
+    VERSION_MAJOR = 1
+    VERSION_MINOR = 0
+    VERSION_PATCH = 0
+    API_VERSION = "$VERSION_MAJOR.$VERSION_MINOR"
+    FULL_VERSION = "$API_VERSION.$VERSION_PATCH"
+}
