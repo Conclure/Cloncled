@@ -1,4 +1,4 @@
-package me.conclure.concled.api.annotations;
+package me.conclure.cloncled.api.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

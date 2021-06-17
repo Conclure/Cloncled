@@ -18,7 +18,7 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
 public final class Bootstrap {
   private final Options options;
   private final ExecutorService executor;
-  private final Bootstrapper bootstrapper = new Bootstrapper();
+  private final Cloncled cloncled = new Cloncled(this);
   private final CountDownLatch enableLatch = new CountDownLatch(1);
   private Lifecycle lifecycle = Lifecycle.CREATED;
 
@@ -55,7 +55,7 @@ public final class Bootstrap {
       String token = bootstrapConfig.get(BootstrapKeys.TOKEN);
 
       try {
-        this.bootstrapper.onEnable(this.options.configPath(),token);
+        this.cloncled.onEnable(this.options.configPath(),token);
         this.enableLatch.countDown();
         this.lifecycle = Lifecycle.ENABLED;
       } catch (Exception e) {
@@ -76,7 +76,7 @@ public final class Bootstrap {
       }
 
       try {
-        this.bootstrapper.onDisable();
+        this.cloncled.onDisable();
       } catch (Exception e) {
         throw new RuntimeException(e);
       } finally {

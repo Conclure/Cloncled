@@ -6,7 +6,7 @@ import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.yaml.NodeStyle;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
-import me.conclure.concled.api.annotations.PolyNull;
+import me.conclure.cloncled.api.annotations.PolyNull;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;

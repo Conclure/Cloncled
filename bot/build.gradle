@@ -6,8 +6,6 @@ version FULL_VERSION
 mainClassName = 'me.conclure.cloncled.Main'
 
 dependencies {
-    runtimeOnly LOGBACK
-
     api JDA
     api GUAVA
     api GSON
@@ -15,6 +13,7 @@ dependencies {
     api CAFFEINE
     api JOPT
 
+    implementation LOGBACK
     implementation API
 }
 
@@ -44,6 +43,7 @@ task runBot(type: JavaExec, group: "bot") {
     workingDir RUN_DIR
     main "-jar"
 
+    standardInput System.in
     args shadowJar.archiveFile.get().asFile.name
 }
 

@@ -1,12 +1,13 @@
 ext {
     /* Dependencies */
     LOGBACK = 'ch.qos.logback:logback-classic:1.2.3'
-    JDA = 'net.dv8tion:JDA:4.3.0_278'
+    JDA = 'net.dv8tion:JDA:4.3.0_280'
     GUAVA = 'com.google.guava:guava:30.1.1-jre'
     GSON = 'com.google.code.gson:gson:2.8.6'
     CONFIGURATE = 'org.spongepowered:configurate-yaml:4.1.1'
     CAFFEINE = 'com.github.ben-manes.caffeine:caffeine:3.0.2'
     JOPT = 'net.sf.jopt-simple:jopt-simple:6.0-alpha-3'
+
 
     /* Shadow plugin related */
     SHADOW = 'com.github.johnrengelman.shadow'

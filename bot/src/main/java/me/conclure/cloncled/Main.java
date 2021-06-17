@@ -1,5 +1,6 @@
 package me.conclure.cloncled;
 
+import ch.qos.logback.classic.Level;
 import joptsimple.OptionParser;
 
 import me.conclure.cloncled.bootstrap.Bootstrap;
