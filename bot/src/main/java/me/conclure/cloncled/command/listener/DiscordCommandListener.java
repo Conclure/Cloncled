@@ -1,28 +1,38 @@
-package me.conclure.cloncled.command;
+package me.conclure.cloncled.command.listener;
 
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.SubscribeEvent;
 
+import me.conclure.cloncled.bootstrap.BotConfig;
 import me.conclure.cloncled.bootstrap.ShutdownSignal;
-import me.conclure.cloncled.bot.ConfigKeys;
+import me.conclure.cloncled.bootstrap.ConfigKeys;
+import me.conclure.cloncled.command.Arguments;
+import me.conclure.cloncled.command.Command;
+import me.conclure.cloncled.command.CommandDispatcher;
+import me.conclure.cloncled.command.CommandMap;
+import me.conclure.cloncled.command.context.DiscordCommandContext;
 import me.conclure.cloncled.configuration.Configuration;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class ChannelCommandListener {
-  private final CommandMap commandMap;
+public final class DiscordCommandListener {
+  private final CommandMap<DiscordCommandContext> commandMap;
   private final ShutdownSignal shutdownSignal;
-  private final Configuration configuration;
+  private final BotConfig botConfig;
   private final CommandDispatcher dispatcher;
 
-  public ChannelCommandListener(CommandMap commandMap, ShutdownSignal shutdownSignal,
-      Configuration configuration, CommandDispatcher dispatcher) {
+  public DiscordCommandListener(
+      CommandMap<DiscordCommandContext> commandMap,
+      ShutdownSignal shutdownSignal,
+      BotConfig botConfig,
+      CommandDispatcher dispatcher
+  ) {
     this.commandMap = commandMap;
     this.shutdownSignal = shutdownSignal;
-    this.configuration = configuration;
+    this.botConfig = botConfig;
     this.dispatcher = dispatcher;
   }
 
@@ -54,13 +64,13 @@ public final class ChannelCommandListener {
     }
 
     String contentRaw = message.getContentRaw();
-    String prefix = this.configuration.get(ConfigKeys.PREFIX);
+    String prefix = this.botConfig.prefix();
 
     if (!contentRaw.startsWith(prefix)) {
       return;
     }
 
-    contentRaw = contentRaw.substring(prefix.length() - 1);
+    contentRaw = contentRaw.substring(prefix.length());
 
     String[] splitContent = contentRaw.split(" ");
 
@@ -82,13 +92,9 @@ public final class ChannelCommandListener {
     }
 
     String commandName = commandLine.get(0);
-    Command command = this.commandMap.getCommand(commandName);
+    Command<? super DiscordCommandContext> command = this.commandMap.getCommand(commandName);
 
     if (command == null) {
-      return;
-    }
-
-    if (!command.allowsExecutionFrom(this.getClass())) {
       return;
     }
 
@@ -98,6 +104,6 @@ public final class ChannelCommandListener {
       arguments.add(commandLine.get(i));
     }
 
-    this.dispatcher.execute(command,new Arguments(arguments));
+    this.dispatcher.execute(command,new DiscordCommandContext(message,new Arguments(arguments)));
   }
 }

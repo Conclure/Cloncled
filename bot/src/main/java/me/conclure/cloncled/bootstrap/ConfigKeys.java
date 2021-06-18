@@ -1,4 +1,4 @@
-package me.conclure.cloncled.bot;
+package me.conclure.cloncled.bootstrap;
 
 import me.conclure.cloncled.configuration.Key;
 import me.conclure.cloncled.configuration.KeyFactory;

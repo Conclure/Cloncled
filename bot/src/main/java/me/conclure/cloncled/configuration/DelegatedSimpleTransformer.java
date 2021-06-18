@@ -12,7 +12,8 @@ public final class DelegatedSimpleTransformer<T> implements Key.Transformer<T> {
   public DelegatedSimpleTransformer(SimpleTranformer<T> tranformer, T fallback, String path) {
     this.tranformer = tranformer;
     this.fallback = fallback;
-    this.path = Arrays.stream(path.split("\\.")).filter(String::isBlank).toArray();
+    this.path = Arrays.stream(path.split("\\.")).toArray();
+    System.out.println(Arrays.toString(this.path));
   }
 
   @Override

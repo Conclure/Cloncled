@@ -30,6 +30,10 @@ public final class Bootstrap {
         .build());
   }
 
+  public ExecutorService executor() {
+    return this.executor;
+  }
+
   public void enable() {
     this.executor.execute(() -> {
       if (this.lifecycle != Lifecycle.CREATED) {
@@ -65,11 +69,7 @@ public final class Bootstrap {
     });
   }
 
-  public CountDownLatch enableLatch() {
-    return this.enableLatch;
-  }
-
-  public void disable() {
+  void disable() {
     this.executor.execute(() -> {
       if (this.lifecycle != Lifecycle.ENABLED) {
         throw new IllegalStateException();

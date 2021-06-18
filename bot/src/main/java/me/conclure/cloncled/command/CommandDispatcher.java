@@ -1,7 +1,7 @@
 package me.conclure.cloncled.command;
 
-import me.conclure.cloncled.ExceptionHandler;
 import me.conclure.cloncled.bootstrap.ShutdownSignal;
+import me.conclure.cloncled.command.context.CommandContext;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -19,7 +19,7 @@ public class CommandDispatcher {
         .build());
   }
 
-  public void execute(Command command, Arguments arguments) {
+  public <C extends CommandContext> void execute(Command<C> command, C context) {
     if (this.shutdownSignal.signalsShutdown()) {
       this.executorService.shutdown();
       return;
@@ -27,7 +27,7 @@ public class CommandDispatcher {
 
     this.executorService.execute(() -> {
       try {
-        command.execute(arguments);
+        command.execute(context);
       } catch (Exception e) {
         throw new CommandException(e);
       }

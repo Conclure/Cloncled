@@ -5,13 +5,16 @@ import java.util.concurrent.TimeUnit;
 
 public class ShutdownSignal {
   private final CountDownLatch latch;
+  private final Bootstrap bootstrap;
 
-  public ShutdownSignal() {
+  public ShutdownSignal(Bootstrap bootstrap) {
+    this.bootstrap = bootstrap;
     this.latch = new CountDownLatch(1);
   }
 
   public void signal() {
     this.latch.countDown();
+    this.bootstrap.disable();
   }
 
   public void await() throws InterruptedException {

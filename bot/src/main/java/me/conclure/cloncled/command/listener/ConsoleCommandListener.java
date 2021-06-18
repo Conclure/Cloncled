@@ -1,4 +1,4 @@
-package me.conclure.cloncled.command;
+package me.conclure.cloncled.command.listener;
 
 import me.conclure.cloncled.bootstrap.ShutdownSignal;
 
