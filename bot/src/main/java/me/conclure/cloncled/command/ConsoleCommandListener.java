@@ -2,9 +2,12 @@ package me.conclure.cloncled.command;
 
 import me.conclure.cloncled.bootstrap.ShutdownSignal;
 
+import java.util.Objects;
 import java.util.Scanner;
 
-public record ConsoleCommandListener(ShutdownSignal shutdownSignal) implements Runnable {
+public final class ConsoleCommandListener implements Runnable {
+
+  private final ShutdownSignal shutdownSignal;
 
   public ConsoleCommandListener(ShutdownSignal shutdownSignal) {
     this.shutdownSignal = shutdownSignal;
@@ -16,11 +19,12 @@ public record ConsoleCommandListener(ShutdownSignal shutdownSignal) implements R
   public void run() {
     Scanner scanner = new Scanner(System.in);
 
-    while (!this.shutdownSignal.shutdown() && scanner.hasNextLine()) {
+    while (!this.shutdownSignal.signalsShutdown() && scanner.hasNextLine()) {
       String input = scanner.nextLine();
       System.out.printf("in %s\n", input);
     }
 
     scanner.close();
   }
+
 }

@@ -43,7 +43,7 @@ public final class Cloncled {
         .build()
         .awaitReady();
 
-    this.commandManager = new CommandManager(this.jda,this.shutdownSignal);
+    this.commandManager = new CommandManager(this.jda,this.shutdownSignal,this.configuration);
   }
 
   void onDisable() {

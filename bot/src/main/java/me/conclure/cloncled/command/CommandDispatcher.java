@@ -15,19 +15,22 @@ public class CommandDispatcher {
   public CommandDispatcher(ShutdownSignal shutdownSignal) {
     this.shutdownSignal = shutdownSignal;
     this.executorService = Executors.newSingleThreadScheduledExecutor(new ThreadFactoryBuilder()
-        .setUncaughtExceptionHandler(ExceptionHandler.INSTANCE)
         .setNameFormat("Command-Dispatcher")
         .build());
   }
 
-  public void execute() {
-    if (this.shutdownSignal.shutdown()) {
+  public void execute(Command command, Arguments arguments) {
+    if (this.shutdownSignal.signalsShutdown()) {
       this.executorService.shutdown();
       return;
     }
 
     this.executorService.execute(() -> {
-
+      try {
+        command.execute(arguments);
+      } catch (Exception e) {
+        throw new CommandException(e);
+      }
     });
   }
 }

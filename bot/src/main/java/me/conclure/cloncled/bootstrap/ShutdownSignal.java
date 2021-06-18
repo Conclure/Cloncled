@@ -22,7 +22,7 @@ public class ShutdownSignal {
     return this.latch.await(timeout, unit);
   }
 
-  public boolean shutdown() {
+  public boolean signalsShutdown() {
     return this.latch.getCount() == 0L;
   }
 }
